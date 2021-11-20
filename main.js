@@ -1,20 +1,16 @@
-
-console.log("main.js");
-console.log("Pass");
-
 require('dotenv').config()
 const Moralis = require('moralis/node');
-const ipc = require('ipc-event-emitter').default(process);
+const ipc = require('ipc-event-emitter').default(process); //ipc-event-emitter use to send and receive data between node.js and unreal engine
 const serverUrl = process.env.MORALIS_SERVER_URL;
 const appId = process.env.MORALIS_APP_ID;
 
 Moralis.start({ serverUrl, appId });
 
-// Do stuff after successful login.
-console.log("1");
 
-//Listen to 'myevent' event
+console.log("Moralis_Start");
 
+
+//Function Login to Moralis
 Login = async (name,email,password) => {
     
 
@@ -22,35 +18,20 @@ Login = async (name,email,password) => {
     
     try{
         const user = await Moralis.User.logIn(email, password);
-        ipc.emit('SuccessLogin', 'Pass');
+        ipc.emit('SuccessLogin', 'Pass');//bind function to call event in unreal engine after success
         console.log("Successfully Log in");
-        // Hooray! Let them use the app now.
     } catch (error) {
         // Show the error message somewhere and let the user try again.
         console.log("Fail!");
     }
 }
 
+// emit function name "login" to unreal engine (waiting for receive data)
 ipc.on('Login', (vars) => {
-    console.log("tewts");
+    console.log("Call Login to Moralis");
     Login(vars.email,vars.email,vars.password);
-    
 });
 
-const euclidean = (a, b) =>{
-	return ((a ** 2) + (b ** 2)) ** 0.5;
-}
-
-//Listen to 'myevent' event
-ipc.on('myevent', (vars) => {
-	let c = euclidean(vars.x, vars.y);
-	console.log('Got a request (a^2+b^2)^0.5: ' + c);
-
-	//emit result back as a 'result' event
-	ipc.emit('result', c);
-});
-
-console.log('started');
 
 
 
