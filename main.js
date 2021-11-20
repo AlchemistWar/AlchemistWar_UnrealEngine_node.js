@@ -1,8 +1,8 @@
 
 const Moralis = require('moralis/node');
 const ipc = require('ipc-event-emitter').default(process); //ipc-event-emitter use to send and receive data between node.js and unreal engine
-const serverUrl = 'https://yss2n1a1jfia.usemoralis.com:2053/server';
-const appId = 'wgXFG92adB9cgJGPModdvDnnfOVJcnmpDCA6wHEo';
+const serverUrl = process.env.MORALIS_SERVER_URL;
+const appId = process.env.MORALIS_APP_ID;
 
 Moralis.start({ serverUrl, appId });
 
