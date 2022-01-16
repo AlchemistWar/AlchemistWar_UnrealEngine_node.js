@@ -2,7 +2,7 @@
 
 Presentation Video Update! : https://devpost.com/software/alchemist-war-game
 
-Plugin link: https://github.com/getnamo/nodejs-ue4
+Plugin link:
 
 This repository code use to send receive data between Moralis Database and Unreal engine game.
 
